@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace YetAnotherChat\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Tymon\JWTAuth\Facades\JWTAuth;
-use App\User;
+use YetAnotherChat\User;
 
 class AuthController extends Controller
 {

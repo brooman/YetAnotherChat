@@ -1,1 +1,1 @@
-# Yet Another Chat Client
+# Yet Another Chat
