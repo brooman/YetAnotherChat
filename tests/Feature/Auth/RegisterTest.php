@@ -15,8 +15,6 @@ class RegisterTest extends TestCase
      */
     public function a_guest_can_register()
     {
-        $this->withoutExceptionHandling();
-
         $attributes = [
             'username' => $this->faker->userName,
             'email' => $this->faker->unique()->safeEmail,
