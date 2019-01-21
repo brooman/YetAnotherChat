@@ -14,6 +14,23 @@ class LoginTest extends TestCase
     /**
      * @test
      */
+    public function login_needs_valid_credentials()
+    {
+        $data = [
+            'email' => 'john.doe@example.org',
+            'password' => 'secret',
+        ];
+
+        $this->json('POST', '/api/login', $data)
+            ->assertStatus(401)
+            ->assertJson([
+                'error' => 'Unauthorized',
+            ]);
+    }
+
+    /**
+     * @test
+     */
     public function a_guest_can_login()
     {
         $user = factory(User::class)->create();
