@@ -38,8 +38,7 @@ class ChatController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:64',
-            //'users' => 'json|nullable',
-            //'users.*' => 'int|exists:users,id|nullable',
+            'users.*' => 'int|exists:users,id|nullable',
         ]);
 
         $conversation = new Conversation([
@@ -52,6 +51,13 @@ class ChatController extends Controller
             'conversation_id' => $conversation->id,
             'user_id' => auth()->user()->id,
         ]);
+
+        foreach ($request->users as $user) {
+            $participants::create([
+                'conversation_id' => $conversation->id,
+                'user_id' => $user,
+            ]);
+        }
 
         $participants->save();
 
