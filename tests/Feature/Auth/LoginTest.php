@@ -14,7 +14,7 @@ class LoginTest extends TestCase
     /**
      * @test
      */
-    public function a_user_can_login()
+    public function a_guest_can_login()
     {
         $user = factory(User::class)->create();
 
