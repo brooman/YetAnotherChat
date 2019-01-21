@@ -22,3 +22,4 @@ Route::post('/login', 'AuthController@login');
 Route::post('/logout', 'AuthController@logout');
 
 Route::post('/conversation/create', 'ChatController@store');
+Route::post('/message/create', 'MessageController@store');

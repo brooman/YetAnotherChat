@@ -3,6 +3,7 @@
 namespace YetAnotherChat\Http\Controllers;
 
 use Illuminate\Http\Request;
+use YetAnotherChat\Message;
 
 class MessageController extends Controller
 {
@@ -13,8 +14,22 @@ class MessageController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, $conversation_id)
+    public function store(Request $request)
     {
+        $request->validate([
+            'conversation_id' => 'required|int',
+            'content' => 'required|string',
+        ]);
+
+        $message = new Message([
+            'user_id' => auth()->user()->id,
+            'conversation_id' => $request->conversation_id,
+            'content' => $request->content,
+        ]);
+
+        $message->save();
+
+        return response()->json(['message' => 'Successfully added message'], 200);
     }
 
     /**
