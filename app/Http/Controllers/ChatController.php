@@ -41,12 +41,14 @@ class ChatController extends Controller
             'users.*' => 'int|exists:users,id|nullable',
         ]);
 
+        //Create conversation
         $conversation = new Conversation([
             'name' => $request->name,
         ]);
 
         $conversation->save();
 
+        //Add participants
         $participants = new Participant([
             'conversation_id' => $conversation->id,
             'user_id' => auth()->user()->id,
@@ -61,6 +63,7 @@ class ChatController extends Controller
 
         $participants->save();
 
+        //Create response
         return response()->json([
             'id' => $conversation->id,
             'name' => $conversation->name,
