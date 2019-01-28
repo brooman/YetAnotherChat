@@ -78,6 +78,7 @@ class MessageTest extends TestCase
      */
     public function user_can_update_a_message()
     {
+        //Create conversation for foreign key constraint
         $c_id = factory(Conversation::class)->create()->id;
 
         $message = factory(Message::class)->create(['conversation_id' => $c_id]);
@@ -96,6 +97,31 @@ class MessageTest extends TestCase
         $this->assertDatabaseHas('messages', [
             'id' => $message->id,
             'content' => $data['content']
+        ]);
+    }
+
+    /**
+     * @test
+     */
+    public function user_can_delete_a_message()
+    {
+        //Create conversation for foreign key constraint
+        $c_id = factory(Conversation::class)->create()->id;
+
+        $message = factory(Message::class)->create(['conversation_id' => $c_id]);
+
+        $user = User::find($message->user_id)->first();
+
+        $data = [
+            'message_id' => $message->id,
+        ];
+
+        //Send request
+        $this->json('POST', 'api/message/destroy', $data, $this->CreateJWTAuthHeader($user))
+                ->assertStatus(200);
+
+        $this->assertDatabaseMissing('messages', [
+            'id' => $message->id,
         ]);
     }
 }

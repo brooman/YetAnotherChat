@@ -24,3 +24,4 @@ Route::post('/logout', 'AuthController@logout');
 Route::post('/conversation/create', 'ChatController@store');
 Route::post('/message/create', 'MessageController@store');
 Route::post('/message/edit', 'MessageController@update');
+Route::post('/message/destroy', 'MessageController@destroy');
