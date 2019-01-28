@@ -2,6 +2,9 @@
 
 namespace App;
 
+use App\User;
+use App\Message;
+use App\Participant;
 use Illuminate\Database\Eloquent\Model;
 
 class Conversation extends Model
@@ -10,9 +13,9 @@ class Conversation extends Model
         'name',
     ];
 
-    public function participants()
+    public function users()
     {
-        return $this->hasMany(Participant::class);
+        return $this->belongsToMany(User::class, 'participants', 'conversation_id', 'user_id');
     }
 
     public function messages()

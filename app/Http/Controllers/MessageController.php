@@ -70,7 +70,6 @@ class MessageController extends Controller
 
             return response()->json(['message' => 'Successfully updated message'], 200);
         } catch (Exception $e) {
-
             return response()->json(['error' => 'Can\'t find message'], 401);
         }
     }
@@ -95,8 +94,7 @@ class MessageController extends Controller
             ])->delete();
 
             return response()->json(['message' => 'Successfully deleted message'], 200);
-        } catch(Exception $e) {
-
+        } catch (Exception $e) {
             return response()->json(['error' => 'Message does not exist'], 401);
         }
     }

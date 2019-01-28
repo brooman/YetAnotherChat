@@ -23,7 +23,8 @@ class ConversationTest extends TestCase
             'users' => [],
         ];
 
-        $response = $this->json('POST', '/api/conversation/create', $data, $this->createJWTAuthHeader($user))
+        $response = $this->actingAs($user)
+                        ->json('POST', '/api/conversation/create', $data)
                         ->assertStatus(200)
                         ->decodeResponseJson();
 
@@ -56,7 +57,8 @@ class ConversationTest extends TestCase
             array_push($data['users'], $user->id);
         }
 
-        $response = $this->json('POST', '/api/conversation/create', $data, $this->createJWTAuthHeader($owner))
+        $response = $this->actingAs($owner)
+                        ->json('POST', '/api/conversation/create', $data)
                         ->assertStatus(200)
                         ->decodeResponseJson();
 
