@@ -1,10 +1,10 @@
 <?php
 
-namespace YetAnotherChat\Http\Controllers;
+namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use YetAnotherChat\Message;
-use YetAnotherChat\Participant;
+use App\Message;
+use App\Participant;
 
 class MessageController extends Controller
 {

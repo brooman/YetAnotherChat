@@ -5,7 +5,7 @@ namespace Tests\Feature\Messaging;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use YetAnotherChat\User;
+use App\User;
 
 class ConversationTest extends TestCase
 {

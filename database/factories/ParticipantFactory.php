@@ -1,9 +1,9 @@
 <?php
 
 use Faker\Generator as Faker;
-use YetAnotherChat\User;
+use App\User;
 
-$factory->define(YetAnotherChat\Participant::class, function (Faker $faker) {
+$factory->define(App\Participant::class, function (Faker $faker) {
     return [
         'conversation_id' => 1,
         'user_id' => function () {
