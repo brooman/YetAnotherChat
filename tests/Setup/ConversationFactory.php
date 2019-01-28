@@ -10,10 +10,11 @@ use App\Message;
 class ConversationFactory
 {
     protected $participantCount = 0;
+
     protected $messages = false;
 
     /**
-     * Create a conversation with Users and messages
+     * Create a conversation with Users and messages.
      *
      * @return Conversation
      */
@@ -25,7 +26,7 @@ class ConversationFactory
         //Add participants * $this->participantCount (default: 0)
         $participants = factory(Participant::class, $this->participantCount)->create([
             'conversation_id' => $conversation->id,
-            'user_id' => factory(User::class)
+            'user_id' => factory(User::class),
         ]);
 
         //Add messages if $messages == true
@@ -33,7 +34,7 @@ class ConversationFactory
             foreach ($participants as $participant) {
                 factory(Message::class)->create([
                     'user_id' => $participant->user_id,
-                    'conversation_id' => $conversation->id
+                    'conversation_id' => $conversation->id,
                 ]);
             }
         }
@@ -42,9 +43,10 @@ class ConversationFactory
     }
 
     /**
-     * Create participants
+     * Create participants.
      *
-     * @param integer $count
+     * @param int $count
+     *
      * @return self
      */
     public function withParticipants(int $count): self
@@ -56,7 +58,7 @@ class ConversationFactory
 
     public function withMessages(): self
     {
-        $this->messages = !$this->messages;
+        $this->messages = ! $this->messages;
 
         return $this;
     }

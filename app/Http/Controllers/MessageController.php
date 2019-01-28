@@ -84,7 +84,7 @@ class MessageController extends Controller
     public function destroy(Request $request)
     {
         $request->validate([
-            'message_id' => 'required|int'
+            'message_id' => 'required|int',
         ]);
 
         try {

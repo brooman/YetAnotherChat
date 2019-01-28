@@ -2,9 +2,6 @@
 
 namespace App;
 
-use App\User;
-use App\Message;
-use App\Participant;
 use Illuminate\Database\Eloquent\Model;
 
 class Conversation extends Model

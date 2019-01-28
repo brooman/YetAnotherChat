@@ -7,9 +7,7 @@ use Tests\Setup\ConversationFactory;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use App\Conversation;
-use App\Participant;
 use App\User;
-use App\Message;
 
 class MessageTest extends TestCase
 {
@@ -82,7 +80,7 @@ class MessageTest extends TestCase
 
         $data = [
             'message_id' => $user->messages->first()->id,
-            'content' => $this->faker->paragraph
+            'content' => $this->faker->paragraph,
         ];
 
         //Send request
@@ -92,7 +90,7 @@ class MessageTest extends TestCase
 
         $this->assertDatabaseHas('messages', [
             'id' => $data['message_id'],
-            'content' => $data['content']
+            'content' => $data['content'],
         ]);
     }
 
@@ -116,7 +114,7 @@ class MessageTest extends TestCase
                 ->assertStatus(200);
 
         $this->assertDatabaseMissing('messages', [
-            'id' => $data['message_id']
+            'id' => $data['message_id'],
         ]);
     }
 }

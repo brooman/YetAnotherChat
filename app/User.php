@@ -2,9 +2,6 @@
 
 namespace App;
 
-use App\Message;
-use App\Participant;
-use App\Conversation;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
