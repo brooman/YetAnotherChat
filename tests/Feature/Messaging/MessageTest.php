@@ -18,8 +18,6 @@ class MessageTest extends TestCase
      */
     public function a_user_can_send_a_message()
     {
-        $this->withoutExceptionHandling();
-
         //Create a conversation
         $conversation = factory(Conversation::class)->create();
 
@@ -46,5 +44,35 @@ class MessageTest extends TestCase
             'conversation_id' => $data['conversation_id'],
             'content' => $data['content'],
         ]);
+    }
+
+    /**
+     * @test
+     */
+    public function user_needs_to_be_participant_to_send_message(){
+        //Create a conversation
+        $conversation = factory(Conversation::class)->create();
+
+        $user = factory(User::class)->create();
+
+        $data = [
+            'conversation_id' => $conversation->id,
+            'content' => $this->faker->paragraph,
+        ];
+
+        //Send request
+        $this->json('POST',
+                    'api/message/create',
+                    $data,
+                    $this->CreateJWTAuthHeader($user->first())
+                    )
+             ->assertStatus(401);
+
+        $this->assertDatabaseMissing('messages', [
+            'user_id' => $user->first()->id,
+            'conversation_id' => $data['conversation_id'],
+            'content' => $data['content'],
+        ]);
+
     }
 }
