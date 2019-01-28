@@ -35,7 +35,12 @@ class MessageTest extends TestCase
         ];
 
         //Send request
-        $this->json('POST', 'api/message/create', $data, $this->CreateJWTAuthHeader($user->first()))
+        $this->json(
+            'POST',
+                    'api/message/create',
+                    $data,
+                    $this->CreateJWTAuthHeader($user->first())
+                    )
              ->assertStatus(200);
 
         //Check database
@@ -49,7 +54,8 @@ class MessageTest extends TestCase
     /**
      * @test
      */
-    public function user_needs_to_be_participant_to_send_message(){
+    public function user_needs_to_be_participant_to_send_message()
+    {
         //Create a conversation
         $conversation = factory(Conversation::class)->create();
 
@@ -61,7 +67,8 @@ class MessageTest extends TestCase
         ];
 
         //Send request
-        $this->json('POST',
+        $this->json(
+            'POST',
                     'api/message/create',
                     $data,
                     $this->CreateJWTAuthHeader($user->first())
@@ -73,6 +80,5 @@ class MessageTest extends TestCase
             'conversation_id' => $data['conversation_id'],
             'content' => $data['content'],
         ]);
-
     }
 }
