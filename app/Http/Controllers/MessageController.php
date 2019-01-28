@@ -51,8 +51,29 @@ class MessageController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
+        $request->validate([
+            'message_id' => 'required|int',
+            'content' => 'required|string',
+        ]);
+
+        //Message
+        try {
+            $message = Message::where([
+                'id' => $request->message_id,
+                'user_id' => auth()->user()->id,
+            ])->firstOrFail();
+
+            $message->content = $request->content;
+
+            $message->save();
+
+            return response()->json(['message' => 'Successfully updated message'], 200);
+        } catch (Exception $e) {
+
+            return response()->json(['error' => 'Can\'t find message'], 401);
+        }
     }
 
     /**

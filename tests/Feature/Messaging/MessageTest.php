@@ -8,6 +8,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use App\Conversation;
 use App\Participant;
 use App\User;
+use App\Message;
 
 class MessageTest extends TestCase
 {
@@ -35,12 +36,7 @@ class MessageTest extends TestCase
         ];
 
         //Send request
-        $this->json(
-            'POST',
-                    'api/message/create',
-                    $data,
-                    $this->CreateJWTAuthHeader($user->first())
-                    )
+        $this->json('POST', 'api/message/create', $data, $this->CreateJWTAuthHeader($user->first()))
              ->assertStatus(200);
 
         //Check database
@@ -67,18 +63,39 @@ class MessageTest extends TestCase
         ];
 
         //Send request
-        $this->json(
-            'POST',
-                    'api/message/create',
-                    $data,
-                    $this->CreateJWTAuthHeader($user->first())
-                    )
+        $this->json('POST', 'api/message/create', $data, $this->CreateJWTAuthHeader($user->first()))
              ->assertStatus(401);
 
         $this->assertDatabaseMissing('messages', [
             'user_id' => $user->first()->id,
             'conversation_id' => $data['conversation_id'],
             'content' => $data['content'],
+        ]);
+    }
+
+    /**
+     * @test
+     */
+    public function user_can_update_a_message()
+    {
+        $c_id = factory(Conversation::class)->create()->id;
+
+        $message = factory(Message::class)->create(['conversation_id' => $c_id]);
+
+        $user = User::find($message->user_id)->first();
+
+        $data = [
+            'message_id' => $message->id,
+            'content' => $this->faker->paragraph
+        ];
+
+        //Send request
+        $this->json('POST', 'api/message/edit', $data, $this->CreateJWTAuthHeader($user))
+                ->assertStatus(200);
+
+        $this->assertDatabaseHas('messages', [
+            'id' => $message->id,
+            'content' => $data['content']
         ]);
     }
 }
