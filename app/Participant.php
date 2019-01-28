@@ -12,11 +12,11 @@ class Participant extends Model
 
     public function user()
     {
-        $this->hasOne(User::class);
+        return $this->hasOne(User::class, 'id', 'user_id');
     }
 
     public function conversation()
     {
-        $this->hasOne(Conversation::class);
+        return $this->hasOne(Conversation::class);
     }
 }
