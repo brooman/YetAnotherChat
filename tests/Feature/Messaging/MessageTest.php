@@ -18,6 +18,8 @@ class MessageTest extends TestCase
      */
     public function a_user_can_send_a_message()
     {
+        $this->withoutExceptionHandling();
+
         //Create a conversation
         $conversation = factory(Conversation::class)->create();
 
@@ -27,7 +29,7 @@ class MessageTest extends TestCase
         ]);
 
         //Get users with id = 1, Returns collection(?)
-        $user = User::find($participants->first());
+        $user = User::find($participants->first()->user_id);
 
         $data = [
             'conversation_id' => $conversation->id,
@@ -36,7 +38,7 @@ class MessageTest extends TestCase
 
         //Send request
         $this->json('POST', 'api/message/create', $data, $this->CreateJWTAuthHeader($user->first()))
-            ->assertStatus(200);
+             ->assertStatus(200);
 
         //Check database
         $this->assertDatabaseHas('messages', [

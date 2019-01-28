@@ -4,6 +4,7 @@ namespace YetAnotherChat\Http\Controllers;
 
 use Illuminate\Http\Request;
 use YetAnotherChat\Message;
+use YetAnotherChat\Participant;
 
 class MessageController extends Controller
 {
@@ -21,15 +22,25 @@ class MessageController extends Controller
             'content' => 'required|string',
         ]);
 
-        $message = new Message([
+        //Participation check
+        $check = Participant::where([
             'user_id' => auth()->user()->id,
             'conversation_id' => $request->conversation_id,
-            'content' => $request->content,
-        ]);
+        ])->exists();
 
-        $message->save();
+        if ($check) {
+            $message = new Message([
+                'user_id' => auth()->user()->id,
+                'conversation_id' => $request->conversation_id,
+                'content' => $request->content,
+            ]);
 
-        return response()->json(['message' => 'Successfully added message'], 200);
+            $message->save();
+
+            return response()->json(['message' => 'Successfully added message'], 200);
+        } else {
+            return response()->json(['error' => 'You are not part of that conversation'], 401);
+        }
     }
 
     /**
