@@ -14,7 +14,7 @@ class LogoutTest extends TestCase
     /**
      * @test
      */
-    public function guest_can_not_logout()
+    public function guest_cant_logout()
     {
         $this->json('POST', '/api/logout')
         ->assertStatus(401);

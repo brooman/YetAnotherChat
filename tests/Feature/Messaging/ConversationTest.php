@@ -14,7 +14,7 @@ class ConversationTest extends TestCase
     /**
      * @test
      */
-    public function a_user_can_create_a_conversation()
+    public function user_can_create_a_conversation()
     {
         $user = factory(User::class)->create();
 
@@ -41,7 +41,7 @@ class ConversationTest extends TestCase
     /**
      * @test
      */
-    public function a_user_can_create_a_conversation_with_others()
+    public function user_can_create_a_conversation_with_others()
     {
         //Create owner and members
         $owner = factory(User::class)->create();
@@ -83,7 +83,7 @@ class ConversationTest extends TestCase
     /**
      * @test
      */
-    public function a_guest_can_not_create_a_conversation()
+    public function guest_cant_create_a_conversation()
     {
         $data = [
             'name' => $this->faker->company,

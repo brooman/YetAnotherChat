@@ -16,7 +16,7 @@ class MessageTest extends TestCase
     /**
      * @test
      */
-    public function a_user_can_send_a_message()
+    public function participant_can_send_a_message()
     {
         $conversation = app(ConversationFactory::class)->withParticipants(1)->create();
 
@@ -42,7 +42,7 @@ class MessageTest extends TestCase
     /**
      * @test
      */
-    public function user_needs_to_be_participant_to_send_message()
+    public function non_participant_cant_send_a_message()
     {
         //Create a conversation
         $conversation = factory(Conversation::class)->create();
@@ -69,7 +69,7 @@ class MessageTest extends TestCase
     /**
      * @test
      */
-    public function user_can_update_a_message()
+    public function participant_can_update_a_message()
     {
         //Create conversation for foreign key constraint
         $conversation = app(ConversationFactory::class)->withParticipants(1)
@@ -97,7 +97,7 @@ class MessageTest extends TestCase
     /**
      * @test
      */
-    public function user_can_delete_a_message()
+    public function participant_can_delete_a_message()
     {
         //Create conversation for foreign key constraint
         $conversation = app(ConversationFactory::class)->withParticipants(1)->withMessages(true)->create();

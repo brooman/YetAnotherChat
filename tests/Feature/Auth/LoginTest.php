@@ -14,7 +14,7 @@ class LoginTest extends TestCase
     /**
      * @test
      */
-    public function login_needs_valid_credentials()
+    public function login_requires_valid_credentials()
     {
         $data = [
             'email' => 'john.doe@example.org',
@@ -31,7 +31,7 @@ class LoginTest extends TestCase
     /**
      * @test
      */
-    public function a_guest_can_login()
+    public function guest_can_login()
     {
         $user = factory(User::class)->create();
 

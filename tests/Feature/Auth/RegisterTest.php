@@ -13,7 +13,7 @@ class RegisterTest extends TestCase
     /**
      * @test
      */
-    public function a_guest_can_register()
+    public function guest_can_register()
     {
         $attributes = [
             'username' => $this->faker->userName,
