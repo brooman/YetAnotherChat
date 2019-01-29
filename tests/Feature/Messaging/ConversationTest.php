@@ -79,4 +79,18 @@ class ConversationTest extends TestCase
             'user_id' => $users->random()->id,
         ]);
     }
+
+    /**
+     * @test
+     */
+    public function a_guest_can_not_create_a_conversation()
+    {
+        $data = [
+            'name' => $this->faker->company,
+            'users' => [],
+        ];
+
+        $this->json('POST', '/api/conversation/create', $data)
+            ->assertStatus(401);
+    }
 }
