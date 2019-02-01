@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 class Participant extends Model
 {
     protected $fillable = [
-        'conversation_id', 'user_id',
+        'channel_id', 'user_id',
     ];
 
     public function user()
@@ -17,8 +17,8 @@ class Participant extends Model
         return $this->hasOne(User::class, 'id', 'user_id');
     }
 
-    public function conversation()
+    public function channel()
     {
-        return $this->hasOne(Conversation::class);
+        return $this->hasOne(Channel::class);
     }
 }

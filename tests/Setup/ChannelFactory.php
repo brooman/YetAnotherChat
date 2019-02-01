@@ -4,30 +4,30 @@ declare(strict_types=1);
 
 namespace Tests\Setup;
 
-use App\Conversation;
+use App\Channel;
 use App\Participant;
 use App\User;
 use App\Message;
 
-class ConversationFactory
+class channelFactory
 {
     protected $participantCount = 0;
 
     protected $messages = false;
 
     /**
-     * Create a conversation with Users and messages.
+     * Create a channel with Users and messages.
      *
-     * @return Conversation
+     * @return Channel
      */
-    public function create($overrides = []): Conversation
+    public function create($overrides = []): Channel
     {
-        //Create conversation
-        $conversation = factory(Conversation::class)->create($overrides);
+        //Create channel
+        $channel = factory(Channel::class)->create($overrides);
 
         //Add participants * $this->participantCount (default: 0)
         $participants = factory(Participant::class, $this->participantCount)->create([
-            'conversation_id' => $conversation->id,
+            'channel_id' => $channel->id,
             'user_id' => factory(User::class),
         ]);
 
@@ -36,12 +36,12 @@ class ConversationFactory
             foreach ($participants as $participant) {
                 factory(Message::class)->create([
                     'user_id' => $participant->user_id,
-                    'conversation_id' => $conversation->id,
+                    'channel_id' => $channel->id,
                 ]);
             }
         }
 
-        return $conversation;
+        return $channel;
     }
 
     /**

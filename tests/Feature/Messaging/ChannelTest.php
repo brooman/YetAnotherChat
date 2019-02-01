@@ -9,14 +9,14 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use App\User;
 
-class ConversationTest extends TestCase
+class ChannelTest extends TestCase
 {
     use WithFaker, RefreshDatabase;
 
     /**
      * @test
      */
-    public function user_can_create_a_conversation()
+    public function user_can_create_a_channel()
     {
         $user = factory(User::class)->create();
 
@@ -26,16 +26,16 @@ class ConversationTest extends TestCase
         ];
 
         $response = $this->actingAs($user)
-                        ->json('POST', '/api/conversation/create', $data)
+                        ->json('POST', '/api/channel/create', $data)
                         ->assertStatus(200)
                         ->decodeResponseJson();
 
-        $this->assertDatabaseHas('conversations', [
+        $this->assertDatabaseHas('channels', [
             'name' => $data['name'],
         ]);
 
         $this->assertDatabaseHas('participants', [
-            'conversation_id' => $response['id'],
+            'channel_id' => $response['id'],
             'user_id' => $user->id,
         ]);
     }
@@ -43,7 +43,7 @@ class ConversationTest extends TestCase
     /**
      * @test
      */
-    public function user_can_create_a_conversation_with_others()
+    public function user_can_create_a_channel_with_others()
     {
         //Create owner and members
         $owner = factory(User::class)->create();
@@ -60,24 +60,24 @@ class ConversationTest extends TestCase
         }
 
         $response = $this->actingAs($owner)
-                        ->json('POST', '/api/conversation/create', $data)
+                        ->json('POST', '/api/channel/create', $data)
                         ->assertStatus(200)
                         ->decodeResponseJson();
 
-        //Check that conversation was created
-        $this->assertDatabaseHas('conversations', [
+        //Check that channel was created
+        $this->assertDatabaseHas('channels', [
             'name' => $data['name'],
         ]);
 
         //Check that owner is in participants list
         $this->assertDatabaseHas('participants', [
-            'conversation_id' => $response['id'],
+            'channel_id' => $response['id'],
             'user_id' => $owner->id,
         ]);
 
         //Check that a random member was added
         $this->assertDatabaseHas('participants', [
-            'conversation_id' => $response['id'],
+            'channel_id' => $response['id'],
             'user_id' => $users->random()->id,
         ]);
     }
@@ -85,14 +85,14 @@ class ConversationTest extends TestCase
     /**
      * @test
      */
-    public function guest_cant_create_a_conversation()
+    public function guest_cant_create_a_channel()
     {
         $data = [
             'name' => $this->faker->company,
             'users' => [],
         ];
 
-        $this->json('POST', '/api/conversation/create', $data)
+        $this->json('POST', '/api/channel/create', $data)
             ->assertStatus(401);
     }
 }

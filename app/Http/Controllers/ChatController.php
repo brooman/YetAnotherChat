@@ -6,7 +6,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Conversation;
+use App\Channel;
 use App\Participant;
 
 class ChatController extends Controller
@@ -35,7 +35,7 @@ class ChatController extends Controller
     }
 
     /**
-     * Store a created conversation.
+     * Store a created channel.
      *
      * @param \Illuminate\Http\Request $request
      *
@@ -48,22 +48,22 @@ class ChatController extends Controller
             'users.*' => 'int|exists:users,id|nullable',
         ]);
 
-        //Create conversation
-        $conversation = new Conversation([
+        //Create channel
+        $channel = new Channel([
             'name' => $request->name,
         ]);
 
-        $conversation->save();
+        $channel->save();
 
         //Add participants
         $participants = new Participant([
-            'conversation_id' => $conversation->id,
+            'channel_id' => $channel->id,
             'user_id' => auth()->user()->id,
         ]);
 
         foreach ($request->users as $user) {
             $participants::create([
-                'conversation_id' => $conversation->id,
+                'channel_id' => $channel->id,
                 'user_id' => $user,
             ]);
         }
@@ -72,8 +72,8 @@ class ChatController extends Controller
 
         //Create response
         return response()->json([
-            'id' => $conversation->id,
-            'name' => $conversation->name,
+            'id' => $channel->id,
+            'name' => $channel->name,
             'message' => 'Successfully created.',
         ], 200);
     }

@@ -13,11 +13,11 @@ class CreateParticipantsTable extends Migration
     {
         Schema::create('participants', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('conversation_id');
+            $table->integer('channel_id');
             $table->integer('user_id');
             $table->timestamps();
 
-            $table->foreign('conversation_id')->references('id')->on('conversations')->onDelete('cascade');
+            $table->foreign('channel_id')->references('id')->on('channels')->onDelete('cascade');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }

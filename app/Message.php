@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 class Message extends Model
 {
     protected $fillable = [
-        'conversation_id', 'user_id', 'content',
+        'channel_id', 'user_id', 'content',
     ];
 
     public function user()
@@ -17,8 +17,8 @@ class Message extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function conversation()
+    public function channel()
     {
-        return $this->belongsTo(Conversation::class);
+        return $this->belongsTo(Channel::class);
     }
 }

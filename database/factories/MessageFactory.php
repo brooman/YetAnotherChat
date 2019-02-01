@@ -6,11 +6,11 @@ use App\User;
 
 $factory->define(App\Message::class, function (Faker $faker) {
     return [
-        'conversation_id' => 1,
+        'channel_id' => 1,
         'user_id' => function () {
             $user = factory(User::class)->create();
             factory(Participant::class)->create([
-                'conversation_id' => 1,
+                'channel_id' => 1,
                 'user_id' => $user->id,
                 ]);
 

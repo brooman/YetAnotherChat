@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace Tests\Feature\Messaging;
 
 use Tests\TestCase;
-use Tests\Setup\ConversationFactory;
+use Tests\Setup\ChannelFactory;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use App\Conversation;
+use App\Channel;
 use App\User;
 
 class MessageTest extends TestCase
@@ -20,12 +20,12 @@ class MessageTest extends TestCase
      */
     public function participant_can_send_a_message()
     {
-        $conversation = app(ConversationFactory::class)->withParticipants(1)->create();
+        $channel = app(ChannelFactory::class)->withParticipants(1)->create();
 
-        $user = $conversation->users->first();
+        $user = $channel->users->first();
 
         $data = [
-            'conversation_id' => $conversation->id,
+            'channel_id' => $channel->id,
             'content' => $this->faker->paragraph,
         ];
 
@@ -36,7 +36,7 @@ class MessageTest extends TestCase
         //Check database
         $this->assertDatabaseHas('messages', [
             'user_id' => $user->id,
-            'conversation_id' => $data['conversation_id'],
+            'channel_id' => $data['channel_id'],
             'content' => $data['content'],
         ]);
     }
@@ -46,14 +46,14 @@ class MessageTest extends TestCase
      */
     public function non_participant_cant_send_a_message()
     {
-        //Create a conversation
-        $conversation = factory(Conversation::class)->create();
+        //Create a channel
+        $channel = factory(Channel::class)->create();
 
         //Create user
         $user = factory(User::class)->create();
 
         $data = [
-            'conversation_id' => $conversation->id,
+            'channel_id' => $channel->id,
             'content' => $this->faker->paragraph,
         ];
 
@@ -63,7 +63,7 @@ class MessageTest extends TestCase
 
         $this->assertDatabaseMissing('messages', [
             'user_id' => $user->id,
-            'conversation_id' => $data['conversation_id'],
+            'channel_id' => $data['channel_id'],
             'content' => $data['content'],
         ]);
     }
@@ -73,12 +73,12 @@ class MessageTest extends TestCase
      */
     public function participant_can_update_a_message()
     {
-        //Create conversation for foreign key constraint
-        $conversation = app(ConversationFactory::class)->withParticipants(1)
+        //Create channel for foreign key constraint
+        $channel = app(ChannelFactory::class)->withParticipants(1)
                         ->withMessages(true)
                         ->create();
 
-        $user = $conversation->users->first();
+        $user = $channel->users->first();
 
         $data = [
             'message_id' => $user->messages->first()->id,
@@ -101,10 +101,10 @@ class MessageTest extends TestCase
      */
     public function participant_can_delete_a_message()
     {
-        //Create conversation for foreign key constraint
-        $conversation = app(ConversationFactory::class)->withParticipants(1)->withMessages(true)->create();
+        //Create channel for foreign key constraint
+        $channel = app(ChannelFactory::class)->withParticipants(1)->withMessages(true)->create();
 
-        $user = $conversation->users->first();
+        $user = $channel->users->first();
 
         $data = [
             'message_id' => $user->messages->first()->id,

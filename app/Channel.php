@@ -6,7 +6,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Conversation extends Model
+class Channel extends Model
 {
     protected $fillable = [
         'name',
@@ -14,7 +14,7 @@ class Conversation extends Model
 
     public function users()
     {
-        return $this->belongsToMany(User::class, 'participants', 'conversation_id', 'user_id');
+        return $this->belongsToMany(User::class, 'participants', 'channel_id', 'user_id');
     }
 
     public function messages()

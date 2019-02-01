@@ -25,20 +25,20 @@ class MessageController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'conversation_id' => 'required|int',
+            'channel_id' => 'required|int',
             'content' => 'required|string',
         ]);
 
         //Participation check
         $check = Participant::where([
             'user_id' => auth()->user()->id,
-            'conversation_id' => $request->conversation_id,
+            'channel_id' => $request->channel_id,
         ])->exists();
 
         if ($check) {
             $message = new Message([
                 'user_id' => auth()->user()->id,
-                'conversation_id' => $request->conversation_id,
+                'channel_id' => $request->channel_id,
                 'content' => $request->content,
             ]);
 
@@ -46,7 +46,7 @@ class MessageController extends Controller
 
             return response()->json(['message' => 'Successfully added message'], 200);
         } else {
-            return response()->json(['error' => 'You are not part of that conversation'], 401);
+            return response()->json(['error' => 'You are not part of that channel'], 401);
         }
     }
 
