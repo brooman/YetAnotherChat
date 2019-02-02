@@ -9,12 +9,12 @@ use Illuminate\Database\Eloquent\Model;
 class Message extends Model
 {
     protected $fillable = [
-        'channel_id', 'user_id', 'content',
+        'channel_id', 'participant_id', 'content',
     ];
 
-    public function user()
+    public function participant()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(Participant::class);
     }
 
     public function channel()

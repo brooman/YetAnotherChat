@@ -11,6 +11,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 class RoleTest extends TestCase
 {
     use WithFaker, RefreshDatabase;
+
     /**
      * @test
      */

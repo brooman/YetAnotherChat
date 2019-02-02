@@ -35,7 +35,7 @@ class ChannelFactory
         if ($this->messages) {
             foreach ($participants as $participant) {
                 factory(Message::class)->create([
-                    'user_id' => $participant->user_id,
+                    'participant_id' => $participant->id,
                     'channel_id' => $channel->id,
                 ]);
             }

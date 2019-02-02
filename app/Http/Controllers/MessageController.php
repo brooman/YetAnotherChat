@@ -29,15 +29,15 @@ class MessageController extends Controller
             'content' => 'required|string',
         ]);
 
-        //Participation check
-        $check = Participant::where([
+        //Get participant
+        $participant = Participant::where([
             'user_id' => auth()->user()->id,
             'channel_id' => $request->channel_id,
-        ])->exists();
+        ])->first();
 
-        if ($check) {
+        if ($participant) {
             $message = new Message([
-                'user_id' => auth()->user()->id,
+                'participant_id' => $participant->id,
                 'channel_id' => $request->channel_id,
                 'content' => $request->content,
             ]);
@@ -45,9 +45,9 @@ class MessageController extends Controller
             $message->save();
 
             return response()->json(['message' => 'Successfully added message'], 200);
-        } else {
-            return response()->json(['error' => 'You are not part of that channel'], 401);
         }
+
+        return response()->json(['message' => 'You are not a participant in this channel'], 401);
     }
 
     /**
@@ -65,20 +65,19 @@ class MessageController extends Controller
         ]);
 
         //Message
-        try {
-            $message = Message::where([
-                'id' => $request->message_id,
-                'user_id' => auth()->user()->id,
-            ])->firstOrFail();
+        $message = Message::with(['participant.user'])->where([
+            'id' => $request->message_id,
+        ])->first();
 
+        //Ownership check
+        if ($message->participant->user->id === auth()->user()->id) {
             $message->content = $request->content;
-
             $message->save();
 
             return response()->json(['message' => 'Successfully updated message'], 200);
-        } catch (Exception $e) {
-            return response()->json(['error' => 'Can\'t find message'], 401);
         }
+
+        return response()->json(['error' => 'Can\'t find message'], 401);
     }
 
     /**
@@ -94,15 +93,16 @@ class MessageController extends Controller
             'message_id' => 'required|int',
         ]);
 
-        try {
-            $message = Message::where([
-                'id' => $request->message_id,
-                'user_id' => auth()->user()->id,
-            ])->delete();
+        $message = Message::with(['participant.user'])->where([
+            'id' => $request->message_id,
+        ])->first();
+
+        if ($message->participant->user->id === auth()->user()->id) {
+            $message->delete();
 
             return response()->json(['message' => 'Successfully deleted message'], 200);
-        } catch (Exception $e) {
-            return response()->json(['error' => 'Message does not exist'], 401);
         }
+
+        return response()->json(['error' => 'Message does not exist'], 401);
     }
 }

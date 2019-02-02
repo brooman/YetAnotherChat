@@ -7,14 +7,15 @@ use App\User;
 $factory->define(App\Message::class, function (Faker $faker) {
     return [
         'channel_id' => 1,
-        'user_id' => function () {
+        'participant_id' => function () {
             $user = factory(User::class)->create();
-            factory(Participant::class)->create([
+
+            $participant = factory(Participant::class)->create([
                 'channel_id' => 1,
                 'user_id' => $user->id,
-                ]);
+            ]);
 
-            return $user->id;
+            return $participant->id;
         },
         'content' => $faker->paragraph,
     ];
