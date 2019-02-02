@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace App;
 
+use App\Role;
+use App\Message;
+use App\Participant;
 use Illuminate\Database\Eloquent\Model;
 
 class Channel extends Model
@@ -20,5 +23,10 @@ class Channel extends Model
     public function messages()
     {
         return $this->hasMany(Message::class);
+    }
+
+    public function roles()
+    {
+        return $this->hasMany(Role::class);
     }
 }

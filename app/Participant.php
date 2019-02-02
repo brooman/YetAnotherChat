@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace App;
 
+use App\Traits\HasRoles;
 use Illuminate\Database\Eloquent\Model;
 
 class Participant extends Model
 {
+    use HasRoles;
 
     protected $fillable = [
         'channel_id', 'user_id',
@@ -25,6 +27,11 @@ class Participant extends Model
 
     public function channel()
     {
-        return $this->hasOne(Channel::class);
+        return $this->belongsTo(Channel::class);
+    }
+
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class, 'participant_roles');
     }
 }

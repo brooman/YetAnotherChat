@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Channel;
+use App\Observers\ChannelObserver;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -11,6 +13,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        Channel::observe(ChannelObserver::class);
     }
 
     /**
