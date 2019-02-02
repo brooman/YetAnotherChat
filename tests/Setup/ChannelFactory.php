@@ -9,7 +9,7 @@ use App\Participant;
 use App\User;
 use App\Message;
 
-class channelFactory
+class ChannelFactory
 {
     protected $participantCount = 0;
 
