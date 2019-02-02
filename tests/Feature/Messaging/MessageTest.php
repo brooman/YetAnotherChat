@@ -20,7 +20,9 @@ class MessageTest extends TestCase
      */
     public function participant_can_send_a_message()
     {
-        $channel = app(ChannelFactory::class)->withParticipants(1)->create();
+        $channel = app(ChannelFactory::class)
+                    ->withParticipants(1)
+                    ->create();
 
         $user = $channel->participants[0]->user;
 
@@ -30,8 +32,9 @@ class MessageTest extends TestCase
         ];
 
         //Send request
-        $this->actingAs($user)->json('POST', 'api/message/create', $data)
-             ->assertStatus(200);
+        $this->actingAs($user)
+            ->json('POST', 'api/message/create', $data)
+            ->assertStatus(200);
 
         //Check database
         $this->assertDatabaseHas('messages', [
@@ -46,9 +49,8 @@ class MessageTest extends TestCase
      */
     public function non_participant_cant_send_a_message()
     {
-        $this->withoutExceptionHandling();
         //Create a channel
-        $channel = factory(Channel::class)->create();
+        $channel = app(ChannelFactory::class)->create();
 
         //Create user
         $user = factory(User::class)->create();
@@ -59,8 +61,9 @@ class MessageTest extends TestCase
         ];
 
         //Send request
-        $this->actingAs($user)->json('POST', 'api/message/create', $data)
-             ->assertStatus(401);
+        $this->actingAs($user)
+            ->json('POST', 'api/message/create', $data)
+            ->assertStatus(401);
 
         $this->assertDatabaseMissing('messages', [
             'channel_id' => $data['channel_id'],
@@ -74,26 +77,27 @@ class MessageTest extends TestCase
     public function participant_can_update_a_message()
     {
         //Create channel for foreign key constraint
-        $channel = app(ChannelFactory::class)->withParticipants(1)
-        ->withMessages(true)
-        ->create();
+        $channel = app(ChannelFactory::class)
+                    ->withParticipants(1)
+                    ->withMessages(true)
+                    ->create();
 
         $user = $channel->participants[0]->user;
 
         $data = [
-            'message_id' => $channel->participants[0]->messages->first()->id,
+            'message_id' => $channel->participants[0]->messages[0]->id,
             'content' => $this->faker->paragraph,
         ];
 
         //Send request
         $this->actingAs($user)
-        ->json('POST', 'api/message/edit', $data)
-        ->assertStatus(200);
+            ->json('POST', 'api/message/edit', $data)
+            ->assertStatus(200);
 
         $this->assertDatabaseHas('messages', [
             'id' => $data['message_id'],
             'content' => $data['content'],
-            ]);
+        ]);
     }
 
     /**
@@ -101,20 +105,22 @@ class MessageTest extends TestCase
      */
     public function participant_can_delete_a_message()
     {
-        $this->withoutExceptionHandling();
         //Create channel for foreign key constraint
-        $channel = app(ChannelFactory::class)->withParticipants(1)->withMessages(true)->create();
+        $channel = app(ChannelFactory::class)
+                    ->withParticipants(1)
+                    ->withMessages(true)
+                    ->create();
 
         $user = $channel->participants[0]->user;
 
         $data = [
-            'message_id' => $channel->participants[0]->messages->first()->id,
+            'message_id' => $channel->participants[0]->messages[0]->id,
         ];
 
         //Send request
         $this->actingAs($user)
-                ->json('POST', 'api/message/destroy', $data)
-                ->assertStatus(200);
+            ->json('POST', 'api/message/destroy', $data)
+            ->assertStatus(200);
 
         $this->assertDatabaseMissing('messages', [
             'id' => $data['message_id'],
