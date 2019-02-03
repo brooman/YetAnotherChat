@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Message;
 use App\Participant;
+use Illuminate\Http\Request;
 
 class MessageController extends Controller
 {
@@ -26,20 +26,20 @@ class MessageController extends Controller
     {
         $request->validate([
             'channel_id' => 'required|int',
-            'content' => 'required|string',
+            'content'    => 'required|string',
         ]);
 
         //Get participant
         $participant = Participant::where([
-            'user_id' => auth()->user()->id,
+            'user_id'    => auth()->user()->id,
             'channel_id' => $request->channel_id,
         ])->first();
 
         if ($participant) {
             $message = new Message([
                 'participant_id' => $participant->id,
-                'channel_id' => $request->channel_id,
-                'content' => $request->content,
+                'channel_id'     => $request->channel_id,
+                'content'        => $request->content,
             ]);
 
             $message->save();
@@ -61,7 +61,7 @@ class MessageController extends Controller
     {
         $request->validate([
             'message_id' => 'required|int',
-            'content' => 'required|string',
+            'content'    => 'required|string',
         ]);
 
         //Message

@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Tests\Feature\Messaging;
 
-use Tests\TestCase;
-use Tests\Setup\ChannelFactory;
-use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use App\Channel;
 use App\User;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\WithFaker;
+use Tests\Setup\ChannelFactory;
+use Tests\TestCase;
 
 class MessageTest extends TestCase
 {
@@ -28,7 +28,7 @@ class MessageTest extends TestCase
 
         $data = [
             'channel_id' => $channel->id,
-            'content' => $this->faker->paragraph,
+            'content'    => $this->faker->paragraph,
         ];
 
         //Send request
@@ -39,8 +39,8 @@ class MessageTest extends TestCase
         //Check database
         $this->assertDatabaseHas('messages', [
             'participant_id' => $channel->participants[0]->id,
-            'channel_id' => $data['channel_id'],
-            'content' => $data['content'],
+            'channel_id'     => $data['channel_id'],
+            'content'        => $data['content'],
         ]);
     }
 
@@ -57,7 +57,7 @@ class MessageTest extends TestCase
 
         $data = [
             'channel_id' => $channel->id,
-            'content' => $this->faker->paragraph,
+            'content'    => $this->faker->paragraph,
         ];
 
         //Send request
@@ -67,7 +67,7 @@ class MessageTest extends TestCase
 
         $this->assertDatabaseMissing('messages', [
             'channel_id' => $data['channel_id'],
-            'content' => $data['content'],
+            'content'    => $data['content'],
         ]);
     }
 
@@ -86,7 +86,7 @@ class MessageTest extends TestCase
 
         $data = [
             'message_id' => $channel->participants[0]->messages[0]->id,
-            'content' => $this->faker->paragraph,
+            'content'    => $this->faker->paragraph,
         ];
 
         //Send request
@@ -95,7 +95,7 @@ class MessageTest extends TestCase
             ->assertStatus(200);
 
         $this->assertDatabaseHas('messages', [
-            'id' => $data['message_id'],
+            'id'      => $data['message_id'],
             'content' => $data['content'],
         ]);
     }

@@ -2,10 +2,10 @@
 
 namespace Tests\Feature;
 
-use Tests\TestCase;
-use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use App\User;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\WithFaker;
+use Tests\TestCase;
 
 class LoginTest extends TestCase
 {
@@ -17,7 +17,7 @@ class LoginTest extends TestCase
     public function login_requires_valid_credentials()
     {
         $data = [
-            'email' => 'john.doe@example.org',
+            'email'    => 'john.doe@example.org',
             'password' => 'secret',
         ];
 
@@ -36,7 +36,7 @@ class LoginTest extends TestCase
         $user = factory(User::class)->create();
 
         $data = [
-            'email' => $user->email,
+            'email'    => $user->email,
             'password' => 'secret',
         ];
 

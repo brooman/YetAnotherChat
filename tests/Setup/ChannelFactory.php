@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Tests\Setup;
 
 use App\Channel;
+use App\Message;
 use App\Participant;
 use App\User;
-use App\Message;
 
 class ChannelFactory
 {
@@ -28,7 +28,7 @@ class ChannelFactory
         //Add participants * $this->participantCount (default: 0)
         $participants = factory(Participant::class, $this->participantCount)->create([
             'channel_id' => $channel->id,
-            'user_id' => factory(User::class),
+            'user_id'    => factory(User::class),
         ]);
 
         //Add messages if $messages == true
@@ -36,7 +36,7 @@ class ChannelFactory
             foreach ($participants as $participant) {
                 factory(Message::class)->create([
                     'participant_id' => $participant->id,
-                    'channel_id' => $channel->id,
+                    'channel_id'     => $channel->id,
                 ]);
             }
         }
@@ -60,7 +60,7 @@ class ChannelFactory
 
     public function withMessages(): self
     {
-        $this->messages = ! $this->messages;
+        $this->messages = !$this->messages;
 
         return $this;
     }

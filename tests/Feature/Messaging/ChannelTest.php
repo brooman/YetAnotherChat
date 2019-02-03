@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Tests\Feature\Messaging;
 
-use Tests\TestCase;
-use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use App\User;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\WithFaker;
+use Tests\TestCase;
 
 class ChannelTest extends TestCase
 {
@@ -21,7 +21,7 @@ class ChannelTest extends TestCase
         $user = factory(User::class)->create();
 
         $data = [
-            'name' => $this->faker->company,
+            'name'  => $this->faker->company,
             'users' => [],
         ];
 
@@ -36,7 +36,7 @@ class ChannelTest extends TestCase
 
         $this->assertDatabaseHas('participants', [
             'channel_id' => $response['id'],
-            'user_id' => $user->id,
+            'user_id'    => $user->id,
         ]);
     }
 
@@ -50,7 +50,7 @@ class ChannelTest extends TestCase
         $users = factory(User::class, 9)->create();
 
         $data = [
-            'name' => $this->faker->company,
+            'name'  => $this->faker->company,
             'users' => [],
         ];
 
@@ -72,13 +72,13 @@ class ChannelTest extends TestCase
         //Check that owner is in participants list
         $this->assertDatabaseHas('participants', [
             'channel_id' => $response['id'],
-            'user_id' => $owner->id,
+            'user_id'    => $owner->id,
         ]);
 
         //Check that a random member was added
         $this->assertDatabaseHas('participants', [
             'channel_id' => $response['id'],
-            'user_id' => $users->random()->id,
+            'user_id'    => $users->random()->id,
         ]);
     }
 
@@ -88,7 +88,7 @@ class ChannelTest extends TestCase
     public function guest_cant_create_a_channel()
     {
         $data = [
-            'name' => $this->faker->company,
+            'name'  => $this->faker->company,
             'users' => [],
         ];
 
