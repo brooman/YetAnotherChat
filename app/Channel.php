@@ -4,9 +4,6 @@ declare(strict_types=1);
 
 namespace App;
 
-use App\Role;
-use App\Message;
-use App\Participant;
 use Illuminate\Database\Eloquent\Model;
 
 class Channel extends Model

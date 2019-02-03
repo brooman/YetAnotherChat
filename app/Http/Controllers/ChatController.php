@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use App\Channel;
 use App\Participant;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ChatController extends Controller
 {
@@ -26,7 +26,7 @@ class ChatController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|string|max:64',
+            'name'    => 'required|string|max:64',
             'users.*' => 'int|exists:users,id|nullable',
         ]);
 
@@ -40,13 +40,13 @@ class ChatController extends Controller
         //Add participants
         $participants = new Participant([
             'channel_id' => $channel->id,
-            'user_id' => auth()->user()->id,
+            'user_id'    => auth()->user()->id,
         ]);
 
         foreach ($request->users as $user) {
             $participants::create([
                 'channel_id' => $channel->id,
-                'user_id' => $user,
+                'user_id'    => $user,
             ]);
         }
 
@@ -54,8 +54,8 @@ class ChatController extends Controller
 
         //Create response
         return response()->json([
-            'id' => $channel->id,
-            'name' => $channel->name,
+            'id'      => $channel->id,
+            'name'    => $channel->name,
             'message' => 'Successfully created.',
         ], 200);
     }

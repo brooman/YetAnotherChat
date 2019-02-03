@@ -2,9 +2,9 @@
 
 namespace Tests\Feature;
 
-use Tests\TestCase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\WithFaker;
+use Tests\TestCase;
 
 class RegisterTest extends TestCase
 {
@@ -16,9 +16,9 @@ class RegisterTest extends TestCase
     public function guest_can_register()
     {
         $attributes = [
-            'username' => $this->faker->userName,
-            'email' => $this->faker->unique()->safeEmail,
-            'password' => 'secret',
+            'username'              => $this->faker->userName,
+            'email'                 => $this->faker->unique()->safeEmail,
+            'password'              => 'secret',
             'password_confirmation' => 'secret',
         ];
 
@@ -27,7 +27,7 @@ class RegisterTest extends TestCase
 
         $this->assertDatabaseHas('users', [
             'username' => $attributes['username'],
-            'email' => $attributes['email'],
+            'email'    => $attributes['email'],
         ]);
     }
 }

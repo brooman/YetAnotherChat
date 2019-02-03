@@ -6,32 +6,37 @@ namespace App\Traits;
 
 use App\Role;
 
-trait HasRoles {
-
+trait HasRoles
+{
     /**
-     * Assign role to participant
+     * Assign role to participant.
      *
      * @param string $query
-     * @return boolean
+     *
+     * @return bool
      */
     public function assignRole(string $query)
     {
         $role = $this->channel->roles->firstWhere('name', $query);
 
-        if($role){
+        if ($role) {
             $this->roles()->attach($role);
+
             return true;
         }
 
         return false;
     }
+
     /**
-     * Check if participant has role
+     * Check if participant has role.
      *
      * @param string $query
-     * @return boolean
+     *
+     * @return bool
      */
-    public function hasRole(string $query){
+    public function hasRole(string $query)
+    {
         return $this->roles()->exists($query);
     }
 }

@@ -2,14 +2,12 @@
 
 namespace App;
 
-use App\Permission;
-use App\Participant;
 use Illuminate\Database\Eloquent\Model;
 
 class Role extends Model
 {
     protected $fillable = [
-        'name', 'channel_id'
+        'name', 'channel_id',
     ];
 
     public function participants()

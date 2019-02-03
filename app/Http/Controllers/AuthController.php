@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Tymon\JWTAuth\Facades\JWTAuth;
-use App\User;
 
 class AuthController extends Controller
 {
@@ -31,14 +31,14 @@ class AuthController extends Controller
         //Validate
         $request->validate([
             'username' => 'required|string|max:32|unique:users',
-            'email' => 'required|string|email|unique:users',
+            'email'    => 'required|string|email|unique:users',
             'password' => 'required|string|min:6|confirmed',
         ]);
 
         //Create user object
         $user = new User([
             'username' => $request->username,
-            'email' => $request->email,
+            'email'    => $request->email,
             'password' => Hash::make($request->password),
         ]);
 
@@ -60,7 +60,7 @@ class AuthController extends Controller
     {
         $credentials = request(['email', 'password']);
 
-        if (! $token = auth()->attempt($credentials)) {
+        if (!$token = auth()->attempt($credentials)) {
             return response()->json(['error' => 'Unauthorized'], 401);
         }
 
@@ -110,8 +110,8 @@ class AuthController extends Controller
     {
         return response()->json([
             'access_token' => $token,
-            'token_type' => 'bearer',
-            'expires_in' => auth()->factory()->getTTL() * 60,
+            'token_type'   => 'bearer',
+            'expires_in'   => auth()->factory()->getTTL() * 60,
         ]);
     }
 }
