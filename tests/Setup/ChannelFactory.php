@@ -28,7 +28,7 @@ class ChannelFactory
         //Add participants * $this->participantCount (default: 0)
         $participants = factory(Participant::class, $this->participantCount)->create([
             'channel_id' => $channel->id,
-            'user_id'    => factory(User::class),
+            'user_id' => factory(User::class),
         ]);
 
         //Add messages if $messages == true
@@ -36,7 +36,7 @@ class ChannelFactory
             foreach ($participants as $participant) {
                 factory(Message::class)->create([
                     'participant_id' => $participant->id,
-                    'channel_id'     => $channel->id,
+                    'channel_id' => $channel->id,
                 ]);
             }
         }

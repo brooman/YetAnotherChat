@@ -12,15 +12,15 @@ class ChannelObserver
     {
         $roles = [
             Role::create([
-                'name'       => 'owner',
+                'name' => 'owner',
                 'channel_id' => $channel->id,
             ]),
             Role::create([
-                'name'       => 'moderator',
+                'name' => 'moderator',
                 'channel_id' => $channel->id,
             ]),
             Role::create([
-                'name'       => 'member',
+                'name' => 'member',
                 'channel_id' => $channel->id,
             ]),
         ];

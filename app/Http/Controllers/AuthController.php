@@ -11,11 +11,11 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 
 class AuthController extends Controller
 {
-    /*
-    * Create a new AuthController instance.
-    *
-    * @return void
-    */
+    /**
+     * Create a new AuthController instance.
+     *
+     * @return void
+     */
     public function __construct()
     {
         $this->middleware('auth:api', ['except' => ['login', 'register']]);
@@ -31,14 +31,14 @@ class AuthController extends Controller
         //Validate
         $request->validate([
             'username' => 'required|string|max:32|unique:users',
-            'email'    => 'required|string|email|unique:users',
+            'email' => 'required|string|email|unique:users',
             'password' => 'required|string|min:6|confirmed',
         ]);
 
         //Create user object
         $user = new User([
             'username' => $request->username,
-            'email'    => $request->email,
+            'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);
 
@@ -110,8 +110,8 @@ class AuthController extends Controller
     {
         return response()->json([
             'access_token' => $token,
-            'token_type'   => 'bearer',
-            'expires_in'   => auth()->factory()->getTTL() * 60,
+            'token_type' => 'bearer',
+            'expires_in' => auth()->factory()->getTTL() * 60,
         ]);
     }
 }

@@ -14,16 +14,16 @@ class LogoutTest extends TestCase
     /**
      * @test
      */
-    public function guest_cant_logout()
+    public function guestCantLogout()
     {
         $this->json('POST', '/api/logout')
-        ->assertStatus(401);
+            ->assertStatus(401);
     }
 
     /**
      * @test
      */
-    public function user_can_logout()
+    public function userCanLogout()
     {
         //Create user and generate token
         $user = factory(User::class)->make();
@@ -31,13 +31,13 @@ class LogoutTest extends TestCase
 
         $token = [
             'access_token' => $token,
-            'token_type'   => 'bearer',
-            'expires_in'   => auth()->factory()->getTTL() * 60,
+            'token_type' => 'bearer',
+            'expires_in' => auth()->factory()->getTTL() * 60,
         ];
 
         $this->json('POST', '/api/logout', $token)
-        ->assertStatus(200)
-        ->assertJson([
+            ->assertStatus(200)
+            ->assertJson([
             'message' => 'Successfully logged out',
         ]);
     }

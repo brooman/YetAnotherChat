@@ -13,12 +13,12 @@ class RegisterTest extends TestCase
     /**
      * @test
      */
-    public function guest_can_register()
+    public function guestCanRegister()
     {
         $attributes = [
-            'username'              => $this->faker->userName,
-            'email'                 => $this->faker->unique()->safeEmail,
-            'password'              => 'secret',
+            'username' => $this->faker->userName,
+            'email' => $this->faker->unique()->safeEmail,
+            'password' => 'secret',
             'password_confirmation' => 'secret',
         ];
 
@@ -27,7 +27,7 @@ class RegisterTest extends TestCase
 
         $this->assertDatabaseHas('users', [
             'username' => $attributes['username'],
-            'email'    => $attributes['email'],
+            'email' => $attributes['email'],
         ]);
     }
 }

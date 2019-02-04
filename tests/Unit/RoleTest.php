@@ -14,7 +14,7 @@ class RoleTest extends TestCase
     /**
      * @test
      */
-    public function participant_can_have_a_role()
+    public function participantCanHaveARole()
     {
         $channel = app(ChannelFactory::class)->withParticipants(1)->create();
 
@@ -28,7 +28,7 @@ class RoleTest extends TestCase
     /**
      * @test
      */
-    public function channel_has_default_roles()
+    public function channelHasDefaultRoles()
     {
         $channel = app(ChannelFactory::class)->create();
 

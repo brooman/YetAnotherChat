@@ -18,17 +18,17 @@ class MessageTest extends TestCase
     /**
      * @test
      */
-    public function participant_can_send_a_message()
+    public function participantCanSendAMessage()
     {
         $channel = app(ChannelFactory::class)
-                    ->withParticipants(1)
-                    ->create();
+            ->withParticipants(1)
+            ->create();
 
         $user = $channel->participants[0]->user;
 
         $data = [
             'channel_id' => $channel->id,
-            'content'    => $this->faker->paragraph,
+            'content' => $this->faker->paragraph,
         ];
 
         //Send request
@@ -39,15 +39,15 @@ class MessageTest extends TestCase
         //Check database
         $this->assertDatabaseHas('messages', [
             'participant_id' => $channel->participants[0]->id,
-            'channel_id'     => $data['channel_id'],
-            'content'        => $data['content'],
+            'channel_id' => $data['channel_id'],
+            'content' => $data['content'],
         ]);
     }
 
     /**
      * @test
      */
-    public function non_participant_cant_send_a_message()
+    public function nonParticipantCantSendAMessage()
     {
         //Create a channel
         $channel = app(ChannelFactory::class)->create();
@@ -57,7 +57,7 @@ class MessageTest extends TestCase
 
         $data = [
             'channel_id' => $channel->id,
-            'content'    => $this->faker->paragraph,
+            'content' => $this->faker->paragraph,
         ];
 
         //Send request
@@ -67,26 +67,26 @@ class MessageTest extends TestCase
 
         $this->assertDatabaseMissing('messages', [
             'channel_id' => $data['channel_id'],
-            'content'    => $data['content'],
+            'content' => $data['content'],
         ]);
     }
 
     /**
      * @test
      */
-    public function participant_can_update_a_message()
+    public function participantCanUpdateAMessage()
     {
         //Create channel for foreign key constraint
         $channel = app(ChannelFactory::class)
-                    ->withParticipants(1)
-                    ->withMessages(true)
-                    ->create();
+            ->withParticipants(1)
+            ->withMessages(true)
+            ->create();
 
         $user = $channel->participants[0]->user;
 
         $data = [
             'message_id' => $channel->participants[0]->messages[0]->id,
-            'content'    => $this->faker->paragraph,
+            'content' => $this->faker->paragraph,
         ];
 
         //Send request
@@ -95,7 +95,7 @@ class MessageTest extends TestCase
             ->assertStatus(200);
 
         $this->assertDatabaseHas('messages', [
-            'id'      => $data['message_id'],
+            'id' => $data['message_id'],
             'content' => $data['content'],
         ]);
     }
@@ -103,13 +103,13 @@ class MessageTest extends TestCase
     /**
      * @test
      */
-    public function participant_can_delete_a_message()
+    public function participantCanDeleteAMessage()
     {
         //Create channel for foreign key constraint
         $channel = app(ChannelFactory::class)
-                    ->withParticipants(1)
-                    ->withMessages(true)
-                    ->create();
+            ->withParticipants(1)
+            ->withMessages(true)
+            ->create();
 
         $user = $channel->participants[0]->user;
 

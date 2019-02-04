@@ -16,19 +16,19 @@ class ChannelTest extends TestCase
     /**
      * @test
      */
-    public function user_can_create_a_channel()
+    public function userCanCreateAChannel()
     {
         $user = factory(User::class)->create();
 
         $data = [
-            'name'  => $this->faker->company,
+            'name' => $this->faker->company,
             'users' => [],
         ];
 
         $response = $this->actingAs($user)
-                        ->json('POST', '/api/channel/create', $data)
-                        ->assertStatus(200)
-                        ->decodeResponseJson();
+            ->json('POST', '/api/channel/create', $data)
+            ->assertStatus(200)
+            ->decodeResponseJson();
 
         $this->assertDatabaseHas('channels', [
             'name' => $data['name'],
@@ -36,21 +36,21 @@ class ChannelTest extends TestCase
 
         $this->assertDatabaseHas('participants', [
             'channel_id' => $response['id'],
-            'user_id'    => $user->id,
+            'user_id' => $user->id,
         ]);
     }
 
     /**
      * @test
      */
-    public function user_can_create_a_channel_with_others()
+    public function userCanCreateAChannelWithOthers()
     {
         //Create owner and members
         $owner = factory(User::class)->create();
         $users = factory(User::class, 9)->create();
 
         $data = [
-            'name'  => $this->faker->company,
+            'name' => $this->faker->company,
             'users' => [],
         ];
 
@@ -60,9 +60,9 @@ class ChannelTest extends TestCase
         }
 
         $response = $this->actingAs($owner)
-                        ->json('POST', '/api/channel/create', $data)
-                        ->assertStatus(200)
-                        ->decodeResponseJson();
+            ->json('POST', '/api/channel/create', $data)
+            ->assertStatus(200)
+            ->decodeResponseJson();
 
         //Check that channel was created
         $this->assertDatabaseHas('channels', [
@@ -72,23 +72,23 @@ class ChannelTest extends TestCase
         //Check that owner is in participants list
         $this->assertDatabaseHas('participants', [
             'channel_id' => $response['id'],
-            'user_id'    => $owner->id,
+            'user_id' => $owner->id,
         ]);
 
         //Check that a random member was added
         $this->assertDatabaseHas('participants', [
             'channel_id' => $response['id'],
-            'user_id'    => $users->random()->id,
+            'user_id' => $users->random()->id,
         ]);
     }
 
     /**
      * @test
      */
-    public function guest_cant_create_a_channel()
+    public function guestCantCreateAChannel()
     {
         $data = [
-            'name'  => $this->faker->company,
+            'name' => $this->faker->company,
             'users' => [],
         ];
 
