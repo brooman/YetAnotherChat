@@ -8,3 +8,8 @@ finder:
     - tests
   name: '*.php'
   not-name: '*.blade.php'
+
+disabled:
+  - length_ordered_imports
+enabled:
+  - alpha_ordered_imports
