@@ -2,9 +2,9 @@
 
 namespace Tests\Feature;
 
-use Tests\TestCase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\WithFaker;
+use Tests\TestCase;
 
 class RegisterTest extends TestCase
 {
@@ -13,7 +13,7 @@ class RegisterTest extends TestCase
     /**
      * @test
      */
-    public function guestCanRegister()
+    public function guest_can_register()
     {
         $attributes = [
             'username' => $this->faker->userName,
@@ -23,7 +23,12 @@ class RegisterTest extends TestCase
         ];
 
         $this->json('POST', 'api/register', $attributes)
-            ->assertStatus(200);
+            ->assertStatus(200)
+            ->assertJsonStructure([
+                'access_token',
+                'token_type',
+                'expires_in',
+            ]);
 
         $this->assertDatabaseHas('users', [
             'username' => $attributes['username'],
