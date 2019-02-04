@@ -20,6 +20,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::post('/register', 'AuthController@register');
 Route::post('/login', 'AuthController@login');
 Route::post('/logout', 'AuthController@logout');
+Route::post('/login/refresh', 'AuthController@refresh');
 
 Route::post('/channel/create', 'ChatController@store');
 Route::post('/message/create', 'MessageController@store');
