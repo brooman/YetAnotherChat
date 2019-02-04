@@ -2,10 +2,10 @@
 
 namespace Tests\Unit;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
-use Tests\Setup\ChannelFactory;
 use Tests\TestCase;
+use Tests\Setup\ChannelFactory;
+use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class RoleTest extends TestCase
 {
