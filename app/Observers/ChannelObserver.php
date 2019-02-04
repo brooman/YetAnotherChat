@@ -2,8 +2,8 @@
 
 namespace App\Observers;
 
-use App\Role;
 use App\Channel;
+use App\Role;
 
 class ChannelObserver
 {

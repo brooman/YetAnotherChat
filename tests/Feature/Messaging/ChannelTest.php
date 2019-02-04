@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Tests\Feature\Messaging;
 
 use App\User;
-use Tests\TestCase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\WithFaker;
+use Tests\TestCase;
 
 class ChannelTest extends TestCase
 {
@@ -16,7 +16,7 @@ class ChannelTest extends TestCase
     /**
      * @test
      */
-    public function userCanCreateAChannel()
+    public function user_can_create_a_channel()
     {
         $user = factory(User::class)->create();
 
@@ -43,7 +43,7 @@ class ChannelTest extends TestCase
     /**
      * @test
      */
-    public function userCanCreateAChannelWithOthers()
+    public function user_can_create_a_channel_with_others()
     {
         //Create owner and members
         $owner = factory(User::class)->create();
@@ -85,7 +85,7 @@ class ChannelTest extends TestCase
     /**
      * @test
      */
-    public function guestCantCreateAChannel()
+    public function guest_cant_create_a_channel()
     {
         $data = [
             'name' => $this->faker->company,

@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Tests\Setup;
 
-use App\User;
 use App\Channel;
 use App\Message;
 use App\Participant;
+use App\User;
 
 class ChannelFactory
 {

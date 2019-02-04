@@ -3,9 +3,9 @@
 namespace Tests\Feature;
 
 use App\User;
-use Tests\TestCase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\WithFaker;
+use Tests\TestCase;
 
 class LogoutTest extends TestCase
 {
@@ -14,7 +14,7 @@ class LogoutTest extends TestCase
     /**
      * @test
      */
-    public function guestCantLogout()
+    public function guest_cant_logout()
     {
         $this->json('POST', '/api/logout')
             ->assertStatus(401);
@@ -23,7 +23,7 @@ class LogoutTest extends TestCase
     /**
      * @test
      */
-    public function userCanLogout()
+    public function user_can_logout()
     {
         //Create user and generate token
         $user = factory(User::class)->make();

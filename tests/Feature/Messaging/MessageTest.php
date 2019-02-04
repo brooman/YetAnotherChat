@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Tests\Feature\Messaging;
 
-use App\User;
 use App\Channel;
-use Tests\TestCase;
-use Tests\Setup\ChannelFactory;
-use Illuminate\Foundation\Testing\WithFaker;
+use App\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\WithFaker;
+use Tests\Setup\ChannelFactory;
+use Tests\TestCase;
 
 class MessageTest extends TestCase
 {
@@ -18,7 +18,7 @@ class MessageTest extends TestCase
     /**
      * @test
      */
-    public function participantCanSendAMessage()
+    public function participant_can_send_a_message()
     {
         $channel = app(ChannelFactory::class)
             ->withParticipants(1)
@@ -47,7 +47,7 @@ class MessageTest extends TestCase
     /**
      * @test
      */
-    public function nonParticipantCantSendAMessage()
+    public function non_participant_cant_send_a_message()
     {
         //Create a channel
         $channel = app(ChannelFactory::class)->create();
@@ -74,7 +74,7 @@ class MessageTest extends TestCase
     /**
      * @test
      */
-    public function participantCanUpdateAMessage()
+    public function participant_can_update_a_message()
     {
         //Create channel for foreign key constraint
         $channel = app(ChannelFactory::class)
@@ -103,7 +103,7 @@ class MessageTest extends TestCase
     /**
      * @test
      */
-    public function participantCanDeleteAMessage()
+    public function participant_can_delete_a_message()
     {
         //Create channel for foreign key constraint
         $channel = app(ChannelFactory::class)

@@ -2,10 +2,10 @@
 
 namespace Tests\Unit;
 
-use Tests\TestCase;
-use Tests\Setup\ChannelFactory;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\WithFaker;
+use Tests\Setup\ChannelFactory;
+use Tests\TestCase;
 
 class RoleTest extends TestCase
 {
@@ -14,7 +14,7 @@ class RoleTest extends TestCase
     /**
      * @test
      */
-    public function participantCanHaveARole()
+    public function participant_can_have_a_role()
     {
         $channel = app(ChannelFactory::class)->withParticipants(1)->create();
 
@@ -28,7 +28,7 @@ class RoleTest extends TestCase
     /**
      * @test
      */
-    public function channelHasDefaultRoles()
+    public function channel_has_default_roles()
     {
         $channel = app(ChannelFactory::class)->create();
 

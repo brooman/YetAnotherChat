@@ -1,7 +1,7 @@
 <?php
 
-use App\User;
 use App\Participant;
+use App\User;
 use Faker\Generator as Faker;
 
 $factory->define(App\Message::class, function (Faker $faker) {
